@@ -68,7 +68,7 @@ def training_pipeline():
         wandb.log({"Val_accuracy": acc_val})
         print(f"Train_accuracy:{acc_train:.2f}, Train_loss:{loss_train:.2f}, Val_accuracy:{acc_val:.2f},Val_loss:{loss_val:.2f}")
 
-    PATH = './cifar_net.pth'
+    PATH = conf.model_save_path
     torch.save(net.state_dict(), PATH)
     with torch.no_grad():
         correct = 0
