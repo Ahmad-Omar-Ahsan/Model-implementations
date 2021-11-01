@@ -165,6 +165,8 @@ class EfficientNet(nn.Module):
             phi_values (dict): tuple of phi value, resolution, drop rate
         """
         super(EfficientNet, self).__init__()
+        self.base_model = base_model
+        self.phi_values = phi_values
         width_factor, depth_factor, dropout_rate = self.calculate_factors(version)
         last_channels = ceil(1280 * width_factor)
         self.pool = nn.AdaptiveAvgPool2d(1)
@@ -173,8 +175,6 @@ class EfficientNet(nn.Module):
             nn.Dropout(dropout_rate),
             nn.Linear(last_channels, num_classes),
         )
-        self.base_model = base_model
-        self.phi_values = phi_values
 
     def calculate_factors(self, version, alpha=1.2, beta=1.1):
         """ Calculates depth factor, drop rate and width factor for the model
