@@ -12,8 +12,8 @@ import wandb
 
 
 
-def training_pipeline():
-    """[summary]
+def pipeline():
+    """Initiates training and testing pipeline for EfficientNet
     """
     conf = Config()
     net=EfficientNet("b0", conf.num_classes, conf.base_model, conf.phi_values).to(conf.device)
@@ -119,4 +119,4 @@ def load_dataset(batch_size):
     return train_loader, val_loader,test_loader
 
 if __name__=="__main__":
-    training_pipeline()
+    pipeline()
