@@ -31,4 +31,5 @@ class Config:
         self.epoch = 50
         self.wandb_key = 'cc482a8baec19ffd11294cdda13fa28a935e644c'
         self.project = 'EfficientNet'
+        self.model_save_path = 'cifar_net.pth'
 
