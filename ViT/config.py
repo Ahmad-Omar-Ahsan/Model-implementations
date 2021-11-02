@@ -16,5 +16,5 @@ class Config:
         }
         self.save_dir = "ViT/"
         self.log_dir = "logs/"
-        self.epochs = 1
+        self.epochs = 50
         self.batch_size = 64
