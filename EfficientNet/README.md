@@ -1,6 +1,20 @@
 # EfficientNet implementation
 
-This is the unofficial pytorch implementation of EfficientNet. To change the configuration, go to config.py and modify the attributes or add new attributese
+This is the unofficial pytorch implementation of EfficientNet. To change the configuration, go to config.py and modify the attributes or add new attributes. This model uses compound scaling, inverted residual blocks from MobileNetV2 and stochastic depth for better performance. 
+
+
+## Config file attributes
+
+| Attributes | Default |
+| --- | --- |
+| number of classes | 10 |
+| device | cuda |
+| batch size | 64 |
+| epoch | 50 |
+| model save path | cifar_net.pth |
+
+## Model architecture
+![alt text](./featured.png)
 
 To train the model
 
