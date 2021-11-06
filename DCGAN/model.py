@@ -45,7 +45,7 @@ class DCGAN(nn.Module):
             nn.Conv2d(color_channels, num_feat_maps_dis, kernel_size=4, stride=2, padding=1),
             nn.LeakyReLU(inplace=True),
 
-            nn.Conv2d(num_feat_maps_dis, num_feat_maps_dis * 2, kernel_size = 4, stride = 2, padding=1, baise=False),
+            nn.Conv2d(num_feat_maps_dis, num_feat_maps_dis * 2, kernel_size = 4, stride = 2, padding=1, bias=False),
             nn.BatchNorm2d(num_feat_maps_dis*2),
             nn.LeakyReLU(inplace=True),
 
