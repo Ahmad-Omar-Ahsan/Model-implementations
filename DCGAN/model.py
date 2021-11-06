@@ -17,7 +17,7 @@ class DCGAN(nn.Module):
         Returns:
             nn.Module: DCGAN network
         """
-        super.__init__()
+        super(DCGAN, self).__init__()
 
         self.generator = nn.Sequential(
             nn.ConvTranspose2d(latent_dim, num_feat_maps_gen*8, kernel_size=4, stride=1, padding=0, bias=False),
