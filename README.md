@@ -6,3 +6,4 @@ This repository contains the implementation of following models
 - Keyword Transformer
 - ResNet
 - ViT
+- DCGAN
