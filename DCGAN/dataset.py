@@ -3,8 +3,9 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms,datasets
 import torch.nn as nn
+from torch.utils.data import random_split
 
-def get_dataloaders_celeba(batch_size, num_workers=0,
+def get_dataloaders_cifar10(batch_size, num_workers=0,
                            train_transforms=None,
                            test_transforms=None,
                            download=True):
@@ -27,33 +28,25 @@ def get_dataloaders_celeba(batch_size, num_workers=0,
     if test_transforms is None:
         test_transforms = transforms.ToTensor()
 
-    train_dataset = datasets.CelebA(root='.',
-                                    split='train',
-                                    transform=train_transforms,
-                                    download=download)
+    dataset = datasets.CIFAR10(root='./data', train=True,
+                                        download=True, transform=train_transforms)
+    val_size = 5000
+    train_size = len(dataset) - val_size 
 
-    valid_dataset = datasets.CelebA(root='.',
-                                    split='valid',
-                                    transform=test_transforms)
-
-    test_dataset = datasets.CelebA(root='.',
-                                   split='test',
-                                   transform=test_transforms)
-
-
-    train_loader = DataLoader(dataset=train_dataset,
-                              batch_size=batch_size,
-                              num_workers=num_workers,
-                              shuffle=True)
-
-    valid_loader = DataLoader(dataset=test_dataset,
-                             batch_size=batch_size,
-                             num_workers=num_workers,
-                             shuffle=False)
+    train_ds, val_ds = random_split(dataset, [train_size, val_size])
     
-    test_loader = DataLoader(dataset=test_dataset,
-                             batch_size=batch_size,
-                             num_workers=num_workers,
-                             shuffle=False)
+    
+    train_loader = torch.utils.data.DataLoader(train_ds, batch_size=batch_size,
+                                            shuffle=True, num_workers=num_workers)
+    val_loader = torch.utils.data.DataLoader(val_ds, batch_size=batch_size,
+                                            shuffle=True, num_workers=num_workers)
 
-    return train_loader, valid_loader, test_loader
+    testset = datasets.CIFAR10(root='./data', train=False,
+                                        download=True, transform=test_transforms)
+    test_loader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
+                                            shuffle=False, num_workers=num_workers)
+
+    return train_loader, val_loader,test_loader
+
+
+   
