@@ -99,6 +99,7 @@ def main():
     """Function to initiate training
     """
     c = Config()
+    wandb.login(key=c.wandb_key)
     wandb.init(name=c.project)
     disc_a = Discriminator(in_channels=3).to(c.device)
     disc_b = Discriminator(in_channels=3).to(c.device)
