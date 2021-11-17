@@ -15,10 +15,10 @@ class Config:
         self.num_epochs = 50
         self.load_model = True
         self.save_model = True
-        self.checkpoint_gen_a = "CycleGAN/results/gena.pth.tar"
-        self.checkpoint_gen_b = "CycleGAN/results/genb.pth.tar"
-        self.checkpoint_dis_a = "CycleGAN/results/disa.pth.tar"
-        self.checkpoint_dis_b = "CycleGAN/results/disb.pth.tar"
+        self.checkpoint_gen_a = "CycleGAN/results/new_ckpt/gena.pth.tar"
+        self.checkpoint_gen_b = "CycleGAN/results/new_ckpt/genb.pth.tar"
+        self.checkpoint_dis_a = "CycleGAN/results/new_ckpt/disa.pth.tar"
+        self.checkpoint_dis_b = "CycleGAN/results/new_ckpt/disb.pth.tar"
         self.pretrained_checkpoint_gen_a = 'CycleGAN/pretrained_weights/CycleGAN_weights/genh.pth.tar'
         self.pretrained_checkpoint_gen_b = 'CycleGAN/pretrained_weights/CycleGAN_weights/genz.pth.tar'
         self.pretrained_checkpoint_dis_a = 'CycleGAN/pretrained_weights/CycleGAN_weights/critich.pth.tar'

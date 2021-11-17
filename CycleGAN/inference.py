@@ -29,7 +29,7 @@ def tensor2im(input_image, imtype=np.uint8):
     return image_numpy.astype(imtype)
 
 
-def save_image(image_numpy, image_path, aspect_ratio=1.0):
+def save_image(image_numpy, image_path, h, w,aspect_ratio=1.0):
     """Save a numpy image to the disk
     Parameters:
         image_numpy (numpy array) -- input numpy array
@@ -37,12 +37,14 @@ def save_image(image_numpy, image_path, aspect_ratio=1.0):
     """
 
     image_pil = Image.fromarray(image_numpy)
-    h, w, _ = image_numpy.shape
+    w1, h1, _ = image_numpy.shape
 
     if aspect_ratio > 1.0:
-        image_pil = image_pil.resize((h, int(w * aspect_ratio)), Image.BICUBIC)
-    if aspect_ratio < 1.0:
-        image_pil = image_pil.resize((int(h / aspect_ratio), w), Image.BICUBIC)
+        image_pil = image_pil.resize((h1, int(w1 * aspect_ratio)), Image.BICUBIC)
+    elif aspect_ratio < 1.0:
+        image_pil = image_pil.resize((int(h1 / aspect_ratio), w1), Image.BICUBIC)
+    else:
+        image_pil = image_pil.resize((h, w), Image.BICUBIC) 
     image_pil.save(image_path)
 
 
@@ -54,9 +56,10 @@ def load_image(image_path):
     """
     c = Config()
     img = np.array(Image.open(image_path).convert("RGB"))
+    w, h, _ = img.shape
     img = c.in_transform(image=img)
     img = torch.unsqueeze(img['image'], 0).to(c.device)
-    return img
+    return img, h, w
 
 
 def inference(input_path: str, output_path: str):
@@ -83,14 +86,14 @@ def inference(input_path: str, output_path: str):
     load_checkpoint(
             c.checkpoint_gen_b, gen_b, opt_gen, c.lr,
         )
-    img = load_image(input_path)
-    out_b = gen_a(img)
+    img,h ,w = load_image(input_path)
+    out_b = gen_b(img)
     out_b = tensor2im(out_b)
-    save_image(out_b, output_path)
+    save_image(out_b, output_path, h, w)
 
 
 
 if __name__ == "__main__":
-    inference('CycleGAN/test_images/house.jpg', 'CycleGAN/test_images/output_house.jpg')
+    inference('CycleGAN/test_images/cat.jpg', 'CycleGAN/test_images/output_cat.jpg')
 
     
