@@ -105,13 +105,13 @@ def main():
 
     opt_dis = optim.Adam(
         list(disc_a.parameters()) + list(disc_b.parameters()),
-        lr=c.LEARNING_RATE,
+        lr=c.lr,
         betas=(0.5, 0.999),
     )
 
     opt_gen = optim.Adam(
         list(gen_a.parameters()) + list(gen_b.parameters()),
-        lr=c.LEARNING_RATE,
+        lr=c.lr,
         betas=(0.5, 0.999),
     )
 
