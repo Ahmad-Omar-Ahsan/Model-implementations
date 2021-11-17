@@ -13,10 +13,11 @@ from generator import Generator
 import wandb
 
 
-def train(disc_a : nn.Module, disc_b : nn.Module, gen_a : nn.Module, gen_b : nn.Module, opt_dis: torch.optim, opt_gen : torch.optim,  loader: Dataset):
+def train(epoch : int,disc_a : nn.Module, disc_b : nn.Module, gen_a : nn.Module, gen_b : nn.Module, opt_dis: torch.optim, opt_gen : torch.optim,  loader: Dataset):
     """ Train step for CycleGAN
 
     Args:
+        epoch (int) : epoch number
         disc_a (nn.Module): Discriminator A
         disc_b (nn.Module): Discriminator B
         gen_a (nn.Module): Generator A 
@@ -31,7 +32,7 @@ def train(disc_a : nn.Module, disc_b : nn.Module, gen_a : nn.Module, gen_b : nn.
 
     for idx, (a, b) in enumerate(loader):
         a = a.to(c.device)
-        b = b.to(b.device)
+        b = b.to(c.device)
 
         # Train discriminator a
         fake_a = gen_a(b)
@@ -88,6 +89,7 @@ def train(disc_a : nn.Module, disc_b : nn.Module, gen_a : nn.Module, gen_b : nn.
         "G_loss" : G_loss.item(),
         "D_loss" : d_loss.item()
     })
+    print(f"After epoch :{epoch + 1} G_loss:{G_loss.item()}, D_loss: {d_loss.item()}")
     
 
 
@@ -119,14 +121,14 @@ def main():
 
     loader = DataLoader(
         dataset,
-        batch_size=c.BATCH_SIZE,
+        batch_size=c.batch_size,
         shuffle=True,
-        num_workers=c.NUM_WORKERS,
+        num_workers=c.num_workers,
     )
     for epoch in range(c.num_epochs):
-        train(disc_a, disc_b, gen_a, gen_b, opt_dis, opt_gen, loader)
+        train(epoch,disc_a, disc_b, gen_a, gen_b, opt_dis, opt_gen, loader)
 
-        if c.SAVE_MODEL:
+        if c.save_model:
             save_checkpoint(gen_a, opt_gen, filename=c.checkpoint_gen_a)
             save_checkpoint(gen_b, opt_gen, filename=c.checkpoint_gen_b)
             save_checkpoint(disc_a, opt_dis, filename=c.checkpoint_dis_a)
