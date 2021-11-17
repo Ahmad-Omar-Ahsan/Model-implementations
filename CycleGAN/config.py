@@ -5,6 +5,8 @@ from albumentations.pytorch import ToTensorV2
 class Config:
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.root_a = 'CycleGAN/training_dataset/trainA'
+        self.root_b = "CycleGAN/training_dataset/trainB"
         self.batch_size = 1
         self.lr = 1e-5
         self.lambda_identity = 0.0
@@ -17,6 +19,9 @@ class Config:
         self.checkpoint_gen_b = "genb.pth.tar"
         self.checkpoint_dis_a = "disa.pth.tar"
         self.checkpoint_dis_b = "disb.pth.tar"
+
+        self.wandb_key = 'cc482a8baec19ffd11294cdda13fa28a935e644c'
+        self.project = 'CycleGAN'
 
         self.transforms = A.Compose(
             [
