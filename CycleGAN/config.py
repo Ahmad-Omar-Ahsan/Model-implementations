@@ -11,7 +11,7 @@ class Config:
         self.lr = 1e-5
         self.lambda_identity = 0.0
         self.lambda_cycle = 10
-        self.num_workers = 4
+        self.num_workers = 2
         self.num_epochs = 50
         self.load_model = True
         self.save_model = True
