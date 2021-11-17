@@ -85,10 +85,10 @@ def train(epoch : int,disc_a : nn.Module, disc_b : nn.Module, gen_a : nn.Module,
         opt_gen.zero_grad()
         G_loss.backward()
         opt_gen.step()
-    wandb.log({
-        "G_loss" : G_loss.item(),
-        "D_loss" : d_loss.item()
-    })
+    # wandb.log({
+    #     "G_loss" : G_loss.item(),
+    #     "D_loss" : d_loss.item()
+    # })
     print(f"After epoch :{epoch + 1} G_loss:{G_loss.item()}, D_loss: {d_loss.item()}")
     
 
@@ -99,8 +99,8 @@ def main():
     """Function to initiate training
     """
     c = Config()
-    wandb.login(key=c.wandb_key)
-    wandb.init(name=c.project)
+    # wandb.login(key=c.wandb_key)
+    # wandb.init(name=c.project)
     disc_a = Discriminator(in_channels=3).to(c.device)
     disc_b = Discriminator(in_channels=3).to(c.device)
     gen_a = Generator(img_channels=3, num_residuals=9).to(c.device)
@@ -117,6 +117,20 @@ def main():
         lr=c.lr,
         betas=(0.5, 0.999),
     )
+
+    load_checkpoint(
+            c.pretrained_checkpoint_gen_a, gen_a, opt_gen, c.lr,
+        )
+    load_checkpoint(
+            c.pretrained_checkpoint_gen_b, gen_b, opt_gen, c.lr,
+        )
+    load_checkpoint(
+            c.pretrained_checkpoint_dis_a, disc_a, opt_dis, c.lr,
+        )
+
+    load_checkpoint(
+            c.pretrained_checkpoint_dis_b, disc_b, opt_dis, c.lr,
+        )
 
     dataset = PixelDataset(root_a = c.root_a, root_b=c.root_b ,transform=c.transforms)
 

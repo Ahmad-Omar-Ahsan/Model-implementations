@@ -1,5 +1,5 @@
 import random, torch, os, numpy as np
-import config
+import config 
 
 
 def save_checkpoint(model, optimizer, filename):
@@ -12,9 +12,10 @@ def save_checkpoint(model, optimizer, filename):
 
 
 def load_checkpoint(checkpoint_file, model, optimizer, lr):
+    c = config.Config()
     print("=> Loading checkpoint <=")
-    checkpoint = torch.load(checkpoint_file, map_location=config.DEVICE)
-    model.load_state_dict(checkpoint["state_dict"])
+    checkpoint = torch.load(checkpoint_file, map_location=c.device)
+    model.load_state_dict(checkpoint["state_dict"], strict=False)
     optimizer.load_state_dict(checkpoint["optimizer"])
 
     for param_group in optimizer.param_groups:
