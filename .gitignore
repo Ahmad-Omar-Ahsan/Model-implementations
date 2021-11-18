@@ -4,6 +4,7 @@ __pycache__
 logs
 celeba
 training_dataset
+ckpts
 results
 test_images/
 pretrained_weights/ 
