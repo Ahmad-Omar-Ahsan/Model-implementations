@@ -7,3 +7,4 @@ This repository contains the implementation of following models
 - ResNet
 - ViT
 - DCGAN
+- CycleGAN
