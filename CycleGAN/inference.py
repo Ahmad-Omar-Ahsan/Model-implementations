@@ -94,6 +94,6 @@ def inference(input_path: str, output_path: str):
 
 
 if __name__ == "__main__":
-    inference('CycleGAN/test_images/cat.jpg', 'CycleGAN/test_images/output_cat.jpg')
+    inference('CycleGAN/test_images/house.jpg', 'CycleGAN/test_images/output_house.jpg')
 
     
