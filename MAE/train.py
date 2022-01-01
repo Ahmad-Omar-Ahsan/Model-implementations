@@ -10,7 +10,7 @@ from config import Config
 def train():
     """ Training function
     """
-    v = ViT(
+    v = ViT.ViT(
     image_size = 256,
     patch_size = 32,
     num_classes = 1000,
@@ -19,7 +19,7 @@ def train():
     heads = 8,
     mlp_dim = 2048)
 
-    mae = MAE(
+    mae = MAE.MAE(
         encoder = v,
         masking_ratio = 0.75,   
         decoder_dim = 512,      
