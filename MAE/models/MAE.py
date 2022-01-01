@@ -86,4 +86,4 @@ class MAE(nn.Module):
 
 
         recon_loss = F.mse_loss(pred_pixel_values, masked_patches)
-        return recon_loss
+        return recon_loss, decoded_tokens

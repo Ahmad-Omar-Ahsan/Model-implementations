@@ -36,16 +36,17 @@ def train():
     for epoch in range(1, 71):
         for image, label in train_loader:
             image, label = image.to(conf.device), label.to(conf.device)
-            loss = mae(image)
+            loss,_ = mae(image)
             loss.backward()
             optimizer.step()
             wandb.log({'Reconstruction loss MSE': loss})
         
         for val_img, val_label in val_loader:
-            val_img, val_label = val_img.to(conf.device), val_label.to(conf.device)
-            out = mae(val_img)
-            img_grid = torchvision.utils.make_grid(out)
-            wandb.log({"Examples": img_grid})
+            with torch.no_grad():
+                val_img, val_label = val_img.to(conf.device), val_label.to(conf.device)
+                _,out = mae(val_img)
+                img_grid = torchvision.utils.make_grid(out)
+                wandb.log({"Examples": img_grid})
     torch.save(v.state_dict(),conf.model_save_path)
 
 
