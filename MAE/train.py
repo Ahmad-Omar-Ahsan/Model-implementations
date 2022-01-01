@@ -10,6 +10,7 @@ from config import Config
 def train():
     """ Training function
     """
+    conf = Config()
     v = ViT.ViT(
     image_size = 256,
     patch_size = 32,
@@ -17,15 +18,15 @@ def train():
     dim = 1024,
     depth = 6,
     heads = 8,
-    mlp_dim = 2048)
+    mlp_dim = 2048).to(device=conf.device)
 
     mae = MAE.MAE(
         encoder = v,
         masking_ratio = 0.75,   
         decoder_dim = 512,      
         decoder_depth = 6       
-    )
-    conf = Config()
+    ).to(device=conf.device)
+    
     wandb.login(key=conf.wandb_key)
     wandb.init(project=conf.project)
     train_loader, val_loader = load_dataset(32)
