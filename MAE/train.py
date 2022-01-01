@@ -45,6 +45,7 @@ def train():
             out = mae(val_img)
             img_grid = torchvision.utils.make_grid(out)
             wandb.log({"Examples": img_grid})
+    torch.save(v.state_dict(),conf.model_save_path)
 
 
 
