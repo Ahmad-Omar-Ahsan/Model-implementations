@@ -68,7 +68,7 @@ def load_dataset(batch_size):
         transforms.Resize((256,256)),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
         ])
-    dataset = torchvision.datasets.ImageNet(root='./data', train=True,
+    dataset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                         download=True, transform=transform)
     val_size = 5000
     train_size = len(dataset) - val_size 
