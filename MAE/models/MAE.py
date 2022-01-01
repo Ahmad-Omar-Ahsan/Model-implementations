@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 from einops import repeat
 
-from ViT import Transformer
+from models.ViT import Transformer
 
 
 class MAE(nn.Module):
