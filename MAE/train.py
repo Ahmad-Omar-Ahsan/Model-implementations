@@ -46,7 +46,8 @@ def train():
                 val_img, val_label = val_img.to(conf.device), val_label.to(conf.device)
                 _,out = mae(val_img)
                 img_grid = torchvision.utils.make_grid(out)
-                wandb.log({"Examples": img_grid})
+                images = wandb.Image(img_grid, caption="Generated images")
+                wandb.log({"Examples": images})
     torch.save(v.state_dict(),conf.model_save_path)
 
 
