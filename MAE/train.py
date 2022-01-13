@@ -29,6 +29,7 @@ def train():
     
     wandb.login(key=conf.wandb_key)
     wandb.init(project=conf.project)
+    wandb.watch(mae, log_freq=100)
     train_loader, val_loader = load_dataset(32)
     optimizer = torch.optim.AdamW(mae.parameters(), lr=3e-4)
     
@@ -44,10 +45,12 @@ def train():
         for val_img, val_label in val_loader:
             with torch.no_grad():
                 val_img, val_label = val_img.to(conf.device), val_label.to(conf.device)
-                _,out = mae(val_img)
-                img_grid = torchvision.utils.make_grid(out)
-                images = wandb.Image(img_grid, caption="Generated images")
-                wandb.log({"Examples": images})
+                _,images_t = mae(val_img)
+                my_table = wandb.Table()
+
+                my_table.add_column("image", images_t)
+                wandb.log({"Reconstructed images": my_table})
+
     torch.save(v.state_dict(),conf.model_save_path)
 
 
