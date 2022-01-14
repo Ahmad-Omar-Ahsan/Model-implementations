@@ -45,11 +45,9 @@ def train():
         for val_img, val_label in val_loader:
             with torch.no_grad():
                 val_img, val_label = val_img.to(conf.device), val_label.to(conf.device)
-                _,images_t = mae(val_img)
-                my_table = wandb.Table()
-
-                my_table.add_column("image", images_t.cpu().detach().numpy())
-                wandb.log({"Reconstructed images": my_table})
+                val_loss,images_t = mae(val_img)
+                
+                wandb.log({"Reconstruction loss MSE Validation": val_loss})
 
     torch.save(v.state_dict(),conf.model_save_path)
 
