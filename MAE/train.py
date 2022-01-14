@@ -48,7 +48,7 @@ def train():
                 _,images_t = mae(val_img)
                 my_table = wandb.Table()
 
-                my_table.add_column("image", images_t)
+                my_table.add_column("image", images_t.cpu().detach().numpy())
                 wandb.log({"Reconstructed images": my_table})
 
     torch.save(v.state_dict(),conf.model_save_path)
